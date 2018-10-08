@@ -1,0 +1,124 @@
+C51 COMPILER V9.59.0.0   BSP_PWM                                                           10/08/2018 15:18:33 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE BSP_PWM
+OBJECT MODULE PLACED IN .\Objects\bsp_pwm.obj
+COMPILER INVOKED BY: D:\keil4\C51\BIN\C51.EXE ..\bsp\bsp_pwm.C OPTIMIZE(8,SPEED) BROWSE INCDIR(..\bsp;..\lib;..\user) DE
+                    -BUG OBJECTEXTEND PRINT(.\Listings\bsp_pwm.lst) TABS(2) OBJECT(.\Objects\bsp_pwm.obj)
+
+line level    source
+
+   1          #include "bsp_pwm.h"
+   2          
+   3          
+   4          unsigned char Pwm1_Open(unsigned char status)
+   5          {
+   6   1        static unsigned char num;
+   7   1        for(num = 0;num < status;num ++)
+   8   1        {
+   9   2          PWMCON  |= 0x1A;    //PWM输出到IO，PWM时钟为Fsys/4
+  10   2          PWMPRD  = PWM_CYCLE;    //PWM周期=(59+1)*(1/6us)=10us ;
+  11   2          PWMCFG  |= 0x02;    //PWM输出不反向,输出至P25/P26/P27
+  12   2          PWMDTYA &= 0x00;
+  13   2          PWMDTY1 = 5;       //PWM0的Duty = 15/60 =1/4
+  14   2          PWMCON  |= 0x80;     //开启PWM
+  15   2        }
+  16   1        if(num != status)
+  17   1        {
+  18   2          return PWM1_ERROR;
+  19   2        }
+  20   1        else
+  21   1        {
+  22   2          return PWM1_SUCCESS;
+  23   2        }
+  24   1      }
+  25          
+  26          
+  27          unsigned char Pwm1_Close(unsigned char status)
+  28          {
+  29   1        static unsigned char num;
+  30   1        for(num = 0;num < status;num ++)
+  31   1        {
+  32   2          PWMCON  |= 0x1A;     //PWM输出到IO，PWM时钟为Fsys/4
+  33   2          PWMPRD  = PWM_CYCLE; //PWM周期=(59+1)*(1/6us)=10us  ;
+  34   2          PWMCFG  &= ~0x02;    //PWM输出不反向,输出至P25/P26/P27
+  35   2          PWMDTYA &= 0;
+  36   2          PWMDTY1 &= 0;        //PWM0的Duty = 15/60 =1/4
+  37   2          PWMCON  |= 0x80;     //开启PWM
+  38   2          
+  39   2        }
+  40   1        if(num != status)
+  41   1        {
+  42   2          return PWM1_ERROR;
+  43   2        }
+  44   1        else
+  45   1        {
+  46   2          return PWM1_SUCCESS;
+  47   2        }
+  48   1      }
+  49          
+  50          unsigned char Pwm2_Open(unsigned char status)
+  51          {
+  52   1        static unsigned char num;
+  53   1        for(num = 0; num < status; num ++)
+  54   1        {
+C51 COMPILER V9.59.0.0   BSP_PWM                                                           10/08/2018 15:18:33 PAGE 2   
+
+  55   2          PWMCON  |= 0x2A;    //PWM输出到IO，PWM时钟为Fsys/4
+  56   2          PWMPRD  = PWM_CYCLE;    //PWM周期=(59+1)*(1/6us)=10us ;
+  57   2          PWMCFG  |= 0x04;    //PWM输出不反向,输出至P25/P26/P27
+  58   2          PWMDTYA &= 0x00;
+  59   2          PWMDTY2 |= 5;       //PWM0的Duty = 15/60 =1/4
+  60   2          PWMCON  |= 0x80;     //开启PWM
+  61   2        }
+  62   1        if(num != status)
+  63   1        {
+  64   2          return PWM2_ERROR;
+  65   2        }
+  66   1        else
+  67   1        {
+  68   2          return PWM2_SUCCESS;
+  69   2        }
+  70   1      }
+  71          
+  72          unsigned char Pwm2_Close(unsigned char status)
+  73          {
+  74   1        unsigned char num;
+  75   1        for(num = 0;num < status;num ++)
+  76   1        {
+  77   2          PWMCON  |= 0x2A;    //PWM输出到IO，PWM时钟为Fsys/4
+  78   2          PWMPRD  = PWM_CYCLE;    //PWM周期=(59+1)*(1/6us)=10us ;
+  79   2          PWMCFG  &= ~0x04;   //PWM输出不反向,输出至P25/P26/P27
+  80   2          PWMDTYA &= 0;
+  81   2          PWMDTY2 &= 0;       //PWM0的Duty = 15/60 =1/4
+  82   2          PWMCON  |= 0x80;    //开启PWM
+  83   2        }
+  84   1        if(num != status)
+  85   1        {
+  86   2          return PWM2_ERROR;
+  87   2        }
+  88   1        else
+  89   1        {
+  90   2          return PWM2_SUCCESS;
+  91   2        }
+  92   1      }
+  93          
+  94          
+  95          
+  96          
+  97          
+  98          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    164    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
